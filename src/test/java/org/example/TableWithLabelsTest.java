@@ -31,4 +31,15 @@ class TableWithLabelsTest {
         assertEquals(rowEsperada.getData(),resultado.getData());
         assertEquals(labelEsperado, labelResultado );
     }
+    @org.junit.jupiter.api.Test
+    void addRow(){
+        CSV csv = new CSV();
+        String separator = System.getProperty( "file.separator" );
+        TableWithLabels tabla = csv.readTableWithLabels( "src" + separator + "iris.csv");
+        List<Double> newRow = new ArrayList<>();
+        newRow.add(5.2);newRow.add(1.2);newRow.add(5.3);newRow.add(7.2);
+        Row esperada = new Row(newRow);
+        tabla.addRow(esperada, "Iris-Setosa");
+        assertEquals(esperada.getData(),tabla.getRowAt(tabla.rows.size()-1).getData());
+    }
 }

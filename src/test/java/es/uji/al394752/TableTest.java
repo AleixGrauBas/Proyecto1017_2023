@@ -1,4 +1,4 @@
-package org.example;
+package es.uji.al394752;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

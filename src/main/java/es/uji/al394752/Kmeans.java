@@ -1,8 +1,8 @@
-package org.example;
+package es.uji.al394752;
 
 import java.util.*;
 
-public class Kmeans {
+public class Kmeans implements Algorithm<Table,  Integer,List<Double>>{
     int numClusters;
     int numIterations;
     long seed;
@@ -74,6 +74,8 @@ public class Kmeans {
         }
 
     }
+
+
     public Integer estimate(List<Double> data){
         Integer tipo = null;
         Double distanciaMin = null;

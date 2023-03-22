@@ -1,6 +1,5 @@
-package org.example;
+package es.uji.al394752;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

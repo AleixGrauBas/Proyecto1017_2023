@@ -1,5 +1,6 @@
 package es.uji.al394752;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -7,7 +8,9 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TableWithLabelsTest {
-
+    CSV csv = new CSV();
+    String separator = System.getProperty( "file.separator" );
+    TableWithLabels tabla = csv.readTableWithLabels( "src" + separator + "iris.csv");
     @Test
     void getRowAt() {
         List<Double> esperado = new LinkedList<>();
@@ -17,25 +20,14 @@ class TableWithLabelsTest {
         esperado.add(0.2);
         String labelEsperado = "Iris-setosa";
         Row rowEsperada = new Row(esperado);
-        CSV csv = new CSV();
-        String separator = System.getProperty( "file.separator" );
-        TableWithLabels table = csv.readTableWithLabels("src" + separator + "iris.csv");
-        RowWithLabel resultado = table.getRowAt(0);
-        String labelResultado = null;
+        RowWithLabel resultado = tabla.getRowAt(0);
         //Buscamos la string que coincida con el numberClass que esperamos
-        for (String s: table.labelsToIndex.keySet()){
-            if (table.labelsToIndex.get(s) == 0) {
-                labelResultado = s;
-            }
-        }
+        String labelResultado = tabla.getLabel(0);
         assertEquals(rowEsperada.getData(),resultado.getData());
         assertEquals(labelEsperado, labelResultado );
     }
     @org.junit.jupiter.api.Test
     void addRow(){
-        CSV csv = new CSV();
-        String separator = System.getProperty( "file.separator" );
-        TableWithLabels tabla = csv.readTableWithLabels( "src" + separator + "iris.csv");
         List<Double> newRow = new ArrayList<>();
         newRow.add(5.2);newRow.add(1.2);newRow.add(5.3);newRow.add(7.2);
         Row esperada = new Row(newRow);

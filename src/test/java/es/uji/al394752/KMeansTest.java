@@ -1,5 +1,6 @@
 package es.uji.al394752;
 
+import es.uji.al394752.Algoritmos.KMeans;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -7,11 +8,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class KmeansTest {
+class KMeansTest {
 
     @Test
     void estimate() {
-        Kmeans kmeans = new Kmeans(3,10,100);
+        KMeans kmeans = new KMeans(3,10,100);
         Table datos = new Table();
 
         List<String> headers = new ArrayList<>();

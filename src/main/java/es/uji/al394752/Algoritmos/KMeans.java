@@ -1,13 +1,16 @@
-package es.uji.al394752;
+package es.uji.al394752.Algoritmos;
+
+import es.uji.al394752.Row;
+import es.uji.al394752.Table;
 
 import java.util.*;
 
-public class Kmeans implements Algorithm<Table,  Integer,List<Double>>{
+public class KMeans implements Algorithm<Table,  Integer,List<Double>> {
     int numClusters;
     int numIterations;
     long seed;
 
-    public Kmeans(int numClusters, int numIterations, long seed) {
+    public KMeans(int numClusters, int numIterations, long seed) {
         this.numClusters = numClusters;
         this.numIterations = numIterations;
         this.seed = seed;
@@ -15,7 +18,7 @@ public class Kmeans implements Algorithm<Table,  Integer,List<Double>>{
     List<Row> centros = new ArrayList<>();
     public void train(Table datos){
         Random random = new Random(seed);
-        int numeroParametros = datos.rows.size();
+        int numeroParametros = datos.getSizeHeaders();
         //Creamos los centros aleatorios
         for (int i = 0; i < numClusters; i++){
             List<Double> punto = new ArrayList<>();
@@ -23,16 +26,19 @@ public class Kmeans implements Algorithm<Table,  Integer,List<Double>>{
                 punto.add(random.nextDouble());
             }
             Row row = new Row(punto);
+            System.out.println("size centros" + row.getData().size());
             centros.add(row);
         }
         //Lista que almacena las rows con su numero de centro correspondiente
         Map<Row, Integer> listaClusters = new HashMap<>();
         for (int iteraciones = 0; iteraciones < numIterations; iteraciones++) {
             //Miramos a que centro pertenece cada row
-            for (int i = 0; i < datos.rows.size(); i++) {
+            System.out.println("iteracion:" + iteraciones +" de" + numIterations);
+            for (int i = 0; i < datos.getSize(); i++) {
+                System.out.println("iteracion " + i + " de " + datos.getSize());
                 Double distanciaMenor = null;
                 int centro = 0;
-                Row rowAComparar = datos.rows.get(i);
+                Row rowAComparar = datos.getRowAt(i);
                 //Calculamos de cual esta mes cerca
                 for (int j = 0; j < centros.size(); j++) {
                     Row rowCentro = centros.get(j);
@@ -78,15 +84,12 @@ public class Kmeans implements Algorithm<Table,  Integer,List<Double>>{
 
     public Integer estimate(List<Double> data){
         Integer tipo = null;
-        Double distanciaMin = null;
         Row dato = new Row(data);
-        for (int i = 0; i < centros.size();i++){
+        Double distanciaMin = calcularDistancia(dato, centros.get(0));
+        for (int i = 1; i < centros.size();i++){
             Double distancia;
             distancia = calcularDistancia(dato, centros.get(i));
-            if (tipo == null){
-                distanciaMin = distancia;
-                tipo = i;
-            } else if (distancia < distanciaMin) {
+            if (distancia < distanciaMin) {
                 distanciaMin = distancia;
                 tipo = i;
             }

@@ -1,5 +1,6 @@
 package es.uji.al394752;
 
+import es.uji.al394752.Algoritmos.KNN;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ class KNNTest {
         knn.train(table);
 
         Integer resultado = knn.estimate(data);
-        Integer esperado = table.labelsToIndex.get("Iris-setosa");
+        Integer esperado = table.getLabelIndice("Iris-setosa");
 
         assertEquals(esperado, resultado);
     }

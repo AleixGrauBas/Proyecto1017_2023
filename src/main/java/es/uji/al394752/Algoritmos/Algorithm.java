@@ -1,4 +1,6 @@
-package es.uji.al394752;
+package es.uji.al394752.Algoritmos;
+
+import es.uji.al394752.Table;
 
 public interface Algorithm <T extends Table, K, J>{
 

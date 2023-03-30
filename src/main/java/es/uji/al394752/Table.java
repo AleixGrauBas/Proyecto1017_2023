@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Table {
-    List<String> headers = new ArrayList<>();
+    protected List<String> headers = new ArrayList<>();
 
-    List<Row> rows = new ArrayList<>();
+    protected List<Row> rows = new ArrayList<>();
 
     public Row getRowAt(int rowNumber){
         return rows.get(rowNumber);
@@ -19,4 +19,8 @@ public class Table {
     public void addRow(Row row){
         rows.add(row);
     }
+    public int getSize(){return rows.size();}
+    public int getSizeHeaders(){return headers.size() - 1;}
+
+    public List<String> getHeaders(){return  headers;}
 }

@@ -5,10 +5,20 @@ import java.util.List;
 import java.util.Map;
 
 public class TableWithLabels extends Table{
-    Map<String, Integer> labelsToIndex = new HashMap<>();
-
+    private Map<String, Integer> labelsToIndex = new HashMap<>();
     public RowWithLabel getRowAt(int rowNumber){
         return (RowWithLabel) rows.get(rowNumber);
+    }
+    public Integer getLabelIndice(String s){
+        return labelsToIndex.get(s);
+    }
+    public String getLabel(Integer n){
+        for (String s: labelsToIndex.keySet()){
+            if (labelsToIndex.get(s) == n) {
+                return s;
+            }
+        }
+        return null;
     }
 
     public void addHeader(List<String> header){
@@ -31,7 +41,6 @@ public class TableWithLabels extends Table{
         }
         //Creamos la row con el numberClass nuevo o encontrado
         RowWithLabel rowWithLabel = new RowWithLabel(row.getData(), index );
-        rows.add(rowWithLabel);
-
+        super.addRow(rowWithLabel);
     }
 }

@@ -6,10 +6,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CSVTest {
+    CSV csv=new CSV();
+    String separator = System.getProperty( "file.separator" );
     @org.junit.jupiter.api.Test
     void readTable() {
-        CSV csv=new CSV();
-        String separator = System.getProperty( "file.separator" );
+
         assertNotNull(csv.readTable("src"+ separator + "miles_dollars.csv"));
         //Comprobamos que lee el numero de filas correcto
         Table tabla = csv.readTable( "src" + separator + "miles_dollars.csv");
@@ -18,13 +19,13 @@ class CSVTest {
         assertEquals(filasObtenidas, filasEsperadas);
         //Comprobamos numero de columnas
         int columnasEsperadas = 2;
-        int columnasObtenidas = tabla.headers.size();
+        int columnasObtenidas = tabla.getSize();
         assertEquals(columnasObtenidas,columnasEsperadas);
         //Comprobamos que las headers son las correspondientes
         List<String> headersEsperadas = new ArrayList<>();
         headersEsperadas.add("Miles");
         headersEsperadas.add("Dollars");
-        List<String> headersObtenidas = tabla.headers;
+        List<String> headersObtenidas = tabla.getHeaders();
         assertEquals(headersObtenidas.get(0), headersEsperadas.get(0));
         assertEquals(headersObtenidas.get(1), headersEsperadas.get(1));
         //Comprobamos el numero que se le asgina a cada fila es correcto
@@ -39,8 +40,7 @@ class CSVTest {
     }
     @org.junit.jupiter.api.Test
     void readTableWithLabels(){
-        CSV csv=new CSV();
-        String separator = System.getProperty( "file.separator" );
+
         assertNotNull(csv.readTableWithLabels("src"+ separator + "iris.csv"));
         //Comprobamos que lee el numero de filas correcto
         TableWithLabels tabla = csv.readTableWithLabels( "src" + separator + "iris.csv");
@@ -49,7 +49,7 @@ class CSVTest {
         assertEquals(filasObtenidas, filasEsperadas);
         //Comprobamos numero de columnas
         int columnasEsperadas = 5;
-        int columnasObtenidas = tabla.headers.size();
+        int columnasObtenidas = tabla.getSize();
         assertEquals(columnasObtenidas,columnasEsperadas);
         //Comprobamos que las headers son las correspondientes
         List<String> headersEsperadas = new ArrayList<>();
@@ -58,7 +58,7 @@ class CSVTest {
         headersEsperadas.add("petal length");
         headersEsperadas.add("petal width");
         headersEsperadas.add("class");
-        List<String> headersObtenidas = tabla.headers;
+        List<String> headersObtenidas = tabla.getHeaders();
         assertEquals(headersObtenidas.get(0), headersEsperadas.get(0));
         assertEquals(headersObtenidas.get(1), headersEsperadas.get(1));
         assertEquals(headersObtenidas.get(2), headersEsperadas.get(2));

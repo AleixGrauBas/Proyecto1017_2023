@@ -1,6 +1,7 @@
 package es.uji.al394752;
 
 import es.uji.al394752.Algoritmos.KMeans;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -9,12 +10,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class KMeansTest {
-
-    @Test
-    void estimate() {
-        KMeans kmeans = new KMeans(3,10,100);
-        Table datos = new Table();
-
+    KMeans kmeans = new KMeans(3,10,100);
+    Table datos = new Table();
+    @BeforeEach
+    void start(){
         List<String> headers = new ArrayList<>();
         headers.add("uno");headers.add("dos");headers.add("tres");headers.add("cuatro");headers.add("cinco");
 
@@ -29,7 +28,15 @@ class KMeansTest {
         añadir.add(5.5);añadir.add(2.4);añadir.add(3.7);añadir.add(1.0);
         rowAñadir = new Row(añadir);
         datos.addRow(rowAñadir);
+    }
 
+    @Test
+    void train() {
+        kmeans.train(datos);
+        assertNotNull(kmeans);
+    }
+    @Test
+    void estimate() {
         kmeans.train(datos);
         List<Double> row2 = new ArrayList<>();
         row2.add(4.7);row2.add(3.2);row2.add(1.3);row2.add(0.2);
@@ -42,7 +49,4 @@ class KMeansTest {
         assertEquals(esperado, resultado);
     }
 
-    @Test
-    void train() {
-    }
 }

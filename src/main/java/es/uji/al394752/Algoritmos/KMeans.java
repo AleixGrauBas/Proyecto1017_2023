@@ -6,9 +6,9 @@ import es.uji.al394752.Table;
 import java.util.*;
 
 public class KMeans implements Algorithm<Table,  Integer,List<Double>> {
-    int numClusters;
-    int numIterations;
-    long seed;
+    private int numClusters;
+    private int numIterations;
+    private long seed;
 
     public KMeans(int numClusters, int numIterations, long seed) {
         this.numClusters = numClusters;
@@ -26,16 +26,13 @@ public class KMeans implements Algorithm<Table,  Integer,List<Double>> {
                 punto.add(random.nextDouble());
             }
             Row row = new Row(punto);
-            System.out.println("size centros" + row.getData().size());
             centros.add(row);
         }
         //Lista que almacena las rows con su numero de centro correspondiente
         Map<Row, Integer> listaClusters = new HashMap<>();
         for (int iteraciones = 0; iteraciones < numIterations; iteraciones++) {
             //Miramos a que centro pertenece cada row
-            System.out.println("iteracion:" + iteraciones +" de" + numIterations);
             for (int i = 0; i < datos.getSize(); i++) {
-                System.out.println("iteracion " + i + " de " + datos.getSize());
                 Double distanciaMenor = null;
                 int centro = 0;
                 Row rowAComparar = datos.getRowAt(i);
@@ -52,31 +49,32 @@ public class KMeans implements Algorithm<Table,  Integer,List<Double>> {
                     }
                 }
                 listaClusters.put(rowAComparar, centro);
-                //Recaulculamos los centros donde k es el grupo
-                for (int k = 0; k < centros.size(); k++){
-                    List<Double> punto = new ArrayList<>();
-                    for (int j = 0; j <= numeroParametros; j++){
-                        double suma = 0;
-                        int cantidad = 0;
-                        //Buscamos todas las rows de dicho centro y calculamos la suma
-                        for (Row row : listaClusters.keySet()) {
-                            if (listaClusters.get(row) == k) {
-                                suma += row.getData().get(j);
-                                cantidad ++;
-                            }
-                        }
-                        if (cantidad == 0){
-                            punto.add(centros.get(k).getData().get(j));
-                        } else{
-                            punto.add(suma/cantidad);
-                        }
 
-                    }
-                    Row row = new Row(punto);
-                    centros.set(k, row);
-                }
+
             }
+            //Recaulculamos los centros donde k es el grupo
+            for (int k = 0; k < centros.size(); k++){
+                List<Double> punto = new ArrayList<>();
+                for (int j = 0; j <= numeroParametros; j++){
+                    double suma = 0;
+                    int cantidad = 0;
+                    //Buscamos todas las rows de dicho centro y calculamos la suma
+                    for (Row row : listaClusters.keySet()) {
+                        if (listaClusters.get(row) == k) {
+                            suma += row.getData().get(j);
+                            cantidad ++;
+                        }
+                    }
+                    if (cantidad == 0){
+                        punto.add(centros.get(k).getData().get(j));
+                    } else{
+                        punto.add(suma/cantidad);
+                    }
 
+                }
+                Row row = new Row(punto);
+                centros.set(k, row);
+            }
         }
 
     }

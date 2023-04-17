@@ -38,14 +38,17 @@ public class RecSys {
         List<String> resultado = new ArrayList<>();
         for (int i = 0; i < numRec; i++){
             for (int j = 0; j < listaEstimate.size(); j++){
-                if (listaEstimate.get(j) == labelLikedItem && j != indiceLikedItem){
-                    i++;
-                    resultado.add(testItemNames.get(j));
+                if (listaEstimate.get(j) != null) {
+                    if (listaEstimate.get(j) == labelLikedItem && j != indiceLikedItem) {
+                        i++;
+                        resultado.add(testItemNames.get(j));
+                    }
                 }
             }
         }
         return resultado;
     }
+    //Buscamos el indice de la cancion que ha gustado y el label que le hemos dado a esta. Luego buscamos canciones con el mismo label
     public List<String> recommend(String nameLikedItem, int numRecommendations){
         int indiceLikedItem = findName(nameLikedItem);
         return selectItems(indiceLikedItem,listaEstimate.get(indiceLikedItem), numRecommendations);

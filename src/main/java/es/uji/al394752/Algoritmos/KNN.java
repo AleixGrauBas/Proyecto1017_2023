@@ -1,14 +1,24 @@
 package es.uji.al394752.Algoritmos;
 
-import es.uji.al394752.Algoritmos.Algorithm;
+import es.uji.al394752.Distancias.Distance;
+import es.uji.al394752.Distancias.EuclideanDistance;
 import es.uji.al394752.Row;
 import es.uji.al394752.RowWithLabel;
 import es.uji.al394752.TableWithLabels;
 
 import java.util.List;
 
-public class KNN implements Algorithm<TableWithLabels,  Integer,List<Double>> {
+public class KNN implements Algorithm<TableWithLabels,  Integer,List<Double>> , DistanceClient{
     TableWithLabels tabla;
+    private Distance distance;
+    public KNN(TableWithLabels tabla, Distance distance ){
+        this.tabla = tabla;
+        this.distance = distance;
+    }
+
+    public KNN() {
+    }
+
     public void train(TableWithLabels data){
         this.tabla = data;
     }
@@ -16,11 +26,11 @@ public class KNN implements Algorithm<TableWithLabels,  Integer,List<Double>> {
     public Integer estimate(List<Double> data){
         Integer tipo = null;
         Row row = new Row(data);
-        Double distanciaMin = calcularDistancia(tabla.getRowAt(0), row);
+        Double distanciaMin = distance.calculateDistance(tabla.getRowAt(0).getData(), data);
         Double distancia;
         for (int i = 1; i < tabla.getSize();i++){
             RowWithLabel rowAux = tabla.getRowAt(i);
-            distancia = calcularDistancia(rowAux,row);
+            distancia = distance.calculateDistance(rowAux.getData(),data);
             if (distancia < distanciaMin) {
                 distanciaMin = distancia;
                 tipo = rowAux.getNumberClass();
@@ -28,13 +38,9 @@ public class KNN implements Algorithm<TableWithLabels,  Integer,List<Double>> {
         }
         return tipo;
     }
-    private Double calcularDistancia(Row rowAComparar, Row rowCentro){
-        Double suma = 0.0;
-        List<Double> dataAux = rowAComparar.getData();
-        List<Double> data = rowCentro.getData();
-        for (int j = 0; j < data.size() ;j++){
-            suma += Math.pow(data.get(j) - dataAux.get(j), 2);
-        }
-        return Math.sqrt(suma);
+
+    @Override
+    public void setDistance(Distance distance) {
+        this.distance = distance;
     }
 }

@@ -1,15 +1,25 @@
 package es.uji.al394752.Algoritmos;
 
+import es.uji.al394752.Distancias.Distance;
+import es.uji.al394752.Distancias.EuclideanDistance;
 import es.uji.al394752.Row;
 import es.uji.al394752.Table;
 
 import java.util.*;
 
-public class KMeans implements Algorithm<Table,  Integer,List<Double>> {
+public class KMeans implements Algorithm<Table,  Integer,List<Double>> , DistanceClient{
     private int numClusters;
     private int numIterations;
     private long seed;
 
+    private Distance distance;
+
+    public KMeans(int numClusters, int numIterations, long seed, Distance distance) {
+        this.numClusters = numClusters;
+        this.numIterations = numIterations;
+        this.seed = seed;
+        this.distance = distance;
+    }
     public KMeans(int numClusters, int numIterations, long seed) {
         this.numClusters = numClusters;
         this.numIterations = numIterations;
@@ -39,7 +49,7 @@ public class KMeans implements Algorithm<Table,  Integer,List<Double>> {
                 //Calculamos de cual esta mes cerca
                 for (int j = 0; j < centros.size(); j++) {
                     Row rowCentro = centros.get(j);
-                    Double distancia = calcularDistancia(rowAComparar, rowCentro);
+                    Double distancia = distance.calculateDistance(rowAComparar.getData(), rowCentro.getData());
                     if (distanciaMenor == null) {
                         distanciaMenor = distancia;
                         centro = j;
@@ -83,10 +93,10 @@ public class KMeans implements Algorithm<Table,  Integer,List<Double>> {
     public Integer estimate(List<Double> data){
         Integer tipo = null;
         Row dato = new Row(data);
-        Double distanciaMin = calcularDistancia(dato, centros.get(0));
+        Double distanciaMin = distance.calculateDistance(data, centros.get(0).getData());
         for (int i = 1; i < centros.size();i++){
             Double distancia;
-            distancia = calcularDistancia(dato, centros.get(i));
+            distancia = distance.calculateDistance(data, centros.get(i).getData());
             if (distancia < distanciaMin) {
                 distanciaMin = distancia;
                 tipo = i;
@@ -94,13 +104,9 @@ public class KMeans implements Algorithm<Table,  Integer,List<Double>> {
         }
         return tipo;
     }
-    private Double calcularDistancia(Row rowAComparar, Row rowCentro){
-        Double suma = 0.0;
-        List<Double> dataAux = rowAComparar.getData();
-        List<Double> data = rowCentro.getData();
-        for (int j = 0; j < data.size();j++){
-            suma += Math.pow(data.get(j) - dataAux.get(j), 2);
-        }
-        return Math.sqrt(suma);
+
+    @Override
+    public void setDistance(Distance distance) {
+        this.distance = distance;
     }
 }

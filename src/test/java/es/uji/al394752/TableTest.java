@@ -1,5 +1,7 @@
 package es.uji.al394752;
 
+import es.uji.al394752.Lectura.CSV;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;

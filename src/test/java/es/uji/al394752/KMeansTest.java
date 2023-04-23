@@ -1,6 +1,7 @@
 package es.uji.al394752;
 
 import es.uji.al394752.Algoritmos.KMeans;
+import es.uji.al394752.Distancias.EuclideanDistance;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class KMeansTest {
-    KMeans kmeans = new KMeans(3,10,100);
+    KMeans kmeans = new KMeans(3,10,100, new EuclideanDistance());
     Table datos = new Table();
     @BeforeEach
     void start(){

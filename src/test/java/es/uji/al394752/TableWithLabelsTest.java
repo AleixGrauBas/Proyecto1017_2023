@@ -1,6 +1,6 @@
 package es.uji.al394752;
 
-import org.junit.jupiter.api.BeforeEach;
+import es.uji.al394752.Lectura.CSV;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -30,8 +30,9 @@ class TableWithLabelsTest {
     void addRow(){
         List<Double> newRow = new ArrayList<>();
         newRow.add(5.2);newRow.add(1.2);newRow.add(5.3);newRow.add(7.2);
-        Row esperada = new Row(newRow);
-        tabla.addRow(esperada, "Iris-Setosa");
+        int index = tabla.getLabel("Iris-Setosa");
+        RowWithLabel esperada = new RowWithLabel(newRow, index);
+        tabla.addRow(esperada);
         assertEquals(esperada.getData(),tabla.getRowAt(tabla.rows.size()-1).getData());
     }
 }

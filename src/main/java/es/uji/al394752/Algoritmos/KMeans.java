@@ -32,7 +32,7 @@ public class KMeans implements Algorithm<Table,  Integer,List<Double>> , Distanc
         //Creamos los centros aleatorios
         for (int i = 0; i < numClusters; i++){
             List<Double> punto = new ArrayList<>();
-            for (int j = 0; j <= numeroParametros; j++){
+            for (int j = 0; j < numeroParametros; j++){
                 punto.add(random.nextDouble());
             }
             Row row = new Row(punto);
@@ -65,7 +65,7 @@ public class KMeans implements Algorithm<Table,  Integer,List<Double>> , Distanc
             //Recaulculamos los centros donde k es el grupo
             for (int k = 0; k < centros.size(); k++){
                 List<Double> punto = new ArrayList<>();
-                for (int j = 0; j <= numeroParametros; j++){
+                for (int j = 0; j < numeroParametros; j++){
                     double suma = 0;
                     int cantidad = 0;
                     //Buscamos todas las rows de dicho centro y calculamos la suma

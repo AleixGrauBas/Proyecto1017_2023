@@ -1,21 +1,23 @@
 package es.uji.al394752;
 
-import es.uji.al394752.Lectura.CSV;
+import es.uji.al394752.Lectura.CSVLabeledFileReader;
+import es.uji.al394752.Lectura.CSVUnlabeledFileReader;
+import es.uji.al394752.Lectura.ReaderTemplate;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CSVTest {
+class ReaderTemplateTest {
 
-    @org.junit.jupiter.api.Test
-    void readTable() {
-        CSV csv=new CSV();
+    @Test
+    void readTableFromSource() {
         String separator = System.getProperty( "file.separator" );
-        assertNotNull(csv.readTable("src"+ separator + "miles_dollars.csv"));
+        ReaderTemplate readerTemplate = new CSVUnlabeledFileReader("src"+ separator + "miles_dollars.csv");
+        Table tabla = readerTemplate.readTableFromSource();
         //Comprobamos que lee el numero de filas correcto
-        Table tabla = csv.readTable( "src" + separator + "miles_dollars.csv");
         int filasEsperadas = 25;
         int filasObtenidas = tabla.getSize();
         assertEquals(filasEsperadas, filasObtenidas);
@@ -39,43 +41,50 @@ class CSVTest {
         rowEsperada.add(3852.0); rowEsperada.add(4801.0);
         rowAComparar = new Row(rowEsperada);
         assertEquals(rowAComparar.getData(),tabla.getRowAt(16).getData());
-    }
-    @org.junit.jupiter.api.Test
-    void readTableWithLabels(){
-        CSV csv=new CSV();
-        String separator = System.getProperty( "file.separator" );
-        assertNotNull(csv.readTableWithLabels("src"+ separator + "iris.csv"));
+
+        //TEST CVLALEBELEDFILEREADER
+        readerTemplate = new CSVLabeledFileReader("src"+ separator + "iris.csv");
         //Comprobamos que lee el numero de filas correcto
-        TableWithLabels tabla = csv.readTableWithLabels( "src" + separator + "iris.csv");
-        int filasEsperadas = 150;
-        int filasObtenidas = tabla.getSize();
+        tabla = readerTemplate.readTableFromSource();
+        filasEsperadas = 150;
+        filasObtenidas = tabla.getSize();
         assertEquals(filasEsperadas, filasObtenidas);
         //Comprobamos numero de columnas
-        int columnasEsperadas = 5;
-        int columnasObtenidas = tabla.getSizeHeaders();
+        columnasEsperadas = 5;
+        columnasObtenidas = tabla.getSizeHeaders();
         assertEquals(columnasObtenidas,columnasEsperadas);
         //Comprobamos que las headers son las correspondientes
-        List<String> headersEsperadas = new ArrayList<>();
+        headersEsperadas = new ArrayList<>();
         headersEsperadas.add("sepal length");
         headersEsperadas.add("sepal width");
         headersEsperadas.add("petal length");
         headersEsperadas.add("petal width");
         headersEsperadas.add("class");
-        List<String> headersObtenidas = tabla.getHeaders();
+        headersObtenidas = tabla.getHeaders();
         assertEquals(headersObtenidas.get(0), headersEsperadas.get(0));
         assertEquals(headersObtenidas.get(1), headersEsperadas.get(1));
         assertEquals(headersObtenidas.get(2), headersEsperadas.get(2));
         assertEquals(headersObtenidas.get(3), headersEsperadas.get(3));
         assertEquals(headersObtenidas.get(4), headersEsperadas.get(4));
         //Comprobamos el numero que se le asgina a cada fila es correcto
-        List<Double> rowEsperada = new ArrayList<>();
+        rowEsperada = new ArrayList<>();
         rowEsperada.add(5.1); rowEsperada.add(3.5);rowEsperada.add(1.4);rowEsperada.add(0.2);
-        Row rowAComparar = new Row(rowEsperada);
+        rowAComparar = new Row(rowEsperada);
         assertEquals(rowAComparar.getData(),tabla.getRowAt(0).getData());
         rowEsperada.clear();
         rowEsperada.add(5.4); rowEsperada.add(3.9);rowEsperada.add(1.3);rowEsperada.add(0.4);
         rowAComparar = new Row(rowEsperada);
         assertEquals(rowAComparar.getData(),tabla.getRowAt(16).getData());
+        List<Double> newRow = new ArrayList<>();
+        newRow.add(5.2);newRow.add(1.2);newRow.add(5.3);newRow.add(7.2);
+        int index = tabla.getLabel("Iris-Setosa");
+        System.out.println(index);
+        RowWithLabel esperada = new RowWithLabel(newRow, index);
+        tabla.addRow(esperada);
+        assertEquals(esperada.getData(),tabla.getRowAt(tabla.rows.size()-1).getData());
+        index = tabla.getLabel("Iris-versicolor");
+        System.out.println(index);
+        index = tabla.getLabel("Iris-virginica");
+        System.out.println(index);
     }
-
 }

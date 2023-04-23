@@ -20,7 +20,11 @@ public class Table {
         rows.add(row);
     }
     public int getSize(){return rows.size();}
-    public int getSizeHeaders(){return headers.size() - 1;}
+    public int getSizeHeaders(){return headers.size() ;}
 
     public List<String> getHeaders(){return  headers;}
+
+    public int getLabel(String dato) {
+        return 0;
+    }
 }

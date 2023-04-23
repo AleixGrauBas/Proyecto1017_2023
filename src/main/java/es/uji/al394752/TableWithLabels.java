@@ -24,8 +24,7 @@ public class TableWithLabels extends Table{
     public void addHeader(List<String> header){
         headers.addAll(header);
     }
-
-    public void addRow(Row row, String label){
+    public int getLabel(String label){
         int index = 0;
         //Buscamos si ya existe una entrada para dicha label
         //Si no existe la añadimos
@@ -39,8 +38,7 @@ public class TableWithLabels extends Table{
                 }
             }
         }
-        //Creamos la row con el numberClass nuevo o encontrado
-        RowWithLabel rowWithLabel = new RowWithLabel(row.getData(), index );
-        super.addRow(rowWithLabel);
+        return index;
     }
+
 }

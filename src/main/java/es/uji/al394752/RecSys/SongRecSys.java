@@ -1,8 +1,10 @@
-package es.uji.al394752;
+package es.uji.al394752.RecSys;
 
 import es.uji.al394752.Algoritmos.Algorithm;
 import es.uji.al394752.Algoritmos.KMeans;
 import es.uji.al394752.Algoritmos.KNN;
+import es.uji.al394752.Lectura.CSV;
+import es.uji.al394752.Table;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -32,7 +34,7 @@ class SongRecSys {
         algorithms.put("kmeans",new KMeans(15, 200, 4321));
 
         // Tables
-        Map<String,Table> tables = new HashMap<>();
+        Map<String, Table> tables = new HashMap<>();
         String [] stages = {"train", "test"};
         CSV csv = new CSV();
         for (String stage : stages) {

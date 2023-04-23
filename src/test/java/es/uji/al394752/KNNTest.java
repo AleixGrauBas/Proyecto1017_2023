@@ -1,6 +1,7 @@
 package es.uji.al394752;
 
 import es.uji.al394752.Algoritmos.KNN;
+import es.uji.al394752.Lectura.CSV;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

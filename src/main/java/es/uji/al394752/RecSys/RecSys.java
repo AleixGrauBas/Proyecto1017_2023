@@ -1,6 +1,8 @@
-package es.uji.al394752;
+package es.uji.al394752.RecSys;
 
 import es.uji.al394752.Algoritmos.Algorithm;
+import es.uji.al394752.Table;
+
 import java.util.ArrayList;
 import java.util.List;
 

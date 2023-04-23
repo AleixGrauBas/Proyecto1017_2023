@@ -1,4 +1,9 @@
-package es.uji.al394752;
+package es.uji.al394752.Lectura;
+
+import es.uji.al394752.Row;
+import es.uji.al394752.RowWithLabel;
+import es.uji.al394752.Table;
+import es.uji.al394752.TableWithLabels;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -57,8 +62,9 @@ public class CSV {
                     Double r = Double.parseDouble(datos[i]);
                     auxRow.add(r);
                 }
-                Row row = new Row(auxRow);
-                table.addRow(row,datos[datos.length - 1]);
+                int indice = table.getLabel(datos[datos.length - 1]);
+                RowWithLabel row = new RowWithLabel(auxRow, indice);
+                table.addRow(row);
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

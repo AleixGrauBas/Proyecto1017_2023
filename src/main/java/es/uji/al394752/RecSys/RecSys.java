@@ -46,6 +46,8 @@ public class RecSys {
                         resultado.add(testItemNames.get(j));
                     }
                 }
+                if (i >= numRec)
+                    break;
             }
         }
         return resultado;

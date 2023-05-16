@@ -14,6 +14,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CSV {
+    BufferedReader br = null;
+    private void abrir(String tabla) throws FileNotFoundException {
+        br = new BufferedReader(new FileReader(tabla));
+    }
+
     public Table readTable(String tabla){
         BufferedReader br = null;
         Table table = new Table();

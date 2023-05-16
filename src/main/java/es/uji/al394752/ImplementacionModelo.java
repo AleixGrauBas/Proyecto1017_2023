@@ -17,7 +17,6 @@ import java.util.List;
 
 public class ImplementacionModelo implements Modelo{
     private Vista vista;
-    private boolean primeraVez = true;
     public  List<String> recomendaciones;
     public void setVista(Vista vista) {
         this.vista = vista;
@@ -25,7 +24,7 @@ public class ImplementacionModelo implements Modelo{
     private RecSys recSys;
     private String recomendacion;
     private String distancia;
-
+    //Devolvemos las recomendaciones
     public void setRecomendacion(String recomendacion) {
         this.recomendacion = recomendacion;
     }
@@ -33,12 +32,12 @@ public class ImplementacionModelo implements Modelo{
     public void setDistancia(String distancia) {
         this.distancia = distancia;
     }
-
+    //actualiza la lista recomendacions cada vez que hay un cambio
     @Override
     public void recomendarCanciones(String cancion, int numRecomendaciones) throws IOException {
         recomendaciones = recSys.recommend(cancion, numRecomendaciones);
     }
-
+    //Inicializa la recomendacion de canciones con la distancia y algoritmo que ya hemos establecido
     @Override
     public void run() throws IOException {
         CSV csv = new CSV();

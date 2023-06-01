@@ -17,6 +17,7 @@ public class KNN implements Algorithm<TableWithLabels,  Integer,List<Double>> , 
     }
 
     public KNN() {
+        distance = new EuclideanDistance();
     }
 
     public void train(TableWithLabels data){

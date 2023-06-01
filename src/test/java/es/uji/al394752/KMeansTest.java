@@ -18,17 +18,17 @@ class KMeansTest {
         List<String> headers = new ArrayList<>();
         headers.add("uno");headers.add("dos");headers.add("tres");headers.add("cuatro");headers.add("cinco");
 
-        List<Double> añadir = new ArrayList<>();
-        Row rowAñadir;
-        añadir.add(4.6);añadir.add(3.4);añadir.add(1.4);añadir.add(0.3);
-        rowAñadir = new Row(añadir);
-        datos.addRow(rowAñadir);
-        añadir.add(6.0);añadir.add(3.0);añadir.add(4.8);añadir.add(1.8);
-        rowAñadir = new Row(añadir);
-        datos.addRow(rowAñadir);
-        añadir.add(5.5);añadir.add(2.4);añadir.add(3.7);añadir.add(1.0);
-        rowAñadir = new Row(añadir);
-        datos.addRow(rowAñadir);
+        List<Double> anyadir = new ArrayList<>();
+        Row rowAnyadir;
+        anyadir.add(4.6);anyadir.add(3.4);anyadir.add(1.4);anyadir.add(0.3);
+        rowAnyadir = new Row(anyadir);
+        datos.addRow(rowAnyadir);
+        anyadir.add(6.0);anyadir.add(3.0);anyadir.add(4.8);anyadir.add(1.8);
+        rowAnyadir = new Row(anyadir);
+        datos.addRow(rowAnyadir);
+        anyadir.add(5.5);anyadir.add(2.4);anyadir.add(3.7);anyadir.add(1.0);
+        rowAnyadir = new Row(anyadir);
+        datos.addRow(rowAnyadir);
     }
 
     @Test

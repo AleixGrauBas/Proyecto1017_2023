@@ -15,31 +15,46 @@ import java.util.List;
 
 public class CSV {
     BufferedReader br = null;
+    String line = null;
+    String [] datos = null;
     private void abrir(String tabla) throws FileNotFoundException {
         br = new BufferedReader(new FileReader(tabla));
     }
+    private List<Double> devuelveRow(){
+        List<Double> auxRow = new ArrayList<>();
+        datos = line.split(",");
+        for (String s : datos){
+            Double r = Double.parseDouble(s);
+            auxRow.add(r);
+        }
+        return auxRow;
+    }
+    private List<Double> devuelveRowWithLabel(){
+        List<Double> auxRow = new ArrayList<>();
+        datos = line.split(",");
+        for (int i = 0; i < datos.length - 1; i++){
+            Double r = Double.parseDouble(datos[i]);
+            auxRow.add(r);
+        }
+        return auxRow;
+    }
+    private List<String> anyadirCabeceras() throws IOException {
+        String line = br.readLine();
+        String [] headers = line.split(",");
+        List<String> auxH = new ArrayList<>();
+        auxH.addAll(Arrays.asList(headers));
+        return auxH;
+    }
 
     public Table readTable(String tabla){
-        BufferedReader br = null;
         Table table = new Table();
         try {
-            br = new BufferedReader(new FileReader(tabla));
+            abrir(tabla);
             //Leemos la primera linea que es diferente al resto
-            String line = br.readLine();
-            String [] headers = line.split(",");
-            List<String> auxH = new ArrayList<>();
-            auxH.addAll(Arrays.asList(headers));
-            table.addHeader(auxH);
+            table.addHeader(anyadirCabeceras());
             //Leemos el resto de lineas que son row
             while ((line = br.readLine()) != null){
-                List<Double> auxRow = new ArrayList<>();
-                String [] datos = line.split(",");
-                for (String s : datos){
-                    Double r = Double.parseDouble(s);
-                    auxRow.add(r);
-                }
-                Row row = new Row(auxRow);
-                table.addRow(row);
+                table.addRow(new Row(devuelveRow()));
             }
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -49,26 +64,14 @@ public class CSV {
         return table;
     }
     public TableWithLabels readTableWithLabels(String tabla){
-        BufferedReader br = null;
         TableWithLabels table = new TableWithLabels();
         try {
-            br = new BufferedReader(new FileReader(tabla));
+            abrir(tabla);
             //Leemos la primera linea que es diferente al resto
-            String line = br.readLine();
-            String [] headers = line.split(",");
-            List<String> auxH = new ArrayList<>();
-            auxH.addAll(Arrays.asList(headers));
-            table.addHeader(auxH);
+            table.addHeader(anyadirCabeceras());
             //Leemos el resto de líneas que son row
             while ((line = br.readLine()) != null){
-                List<Double> auxRow = new ArrayList<>();
-                String [] datos = line.split(",");
-                for (int i = 0; i < datos.length - 1; i++){
-                    Double r = Double.parseDouble(datos[i]);
-                    auxRow.add(r);
-                }
-                int indice = table.getLabel(datos[datos.length - 1]);
-                RowWithLabel row = new RowWithLabel(auxRow, indice);
+                RowWithLabel row = new RowWithLabel(devuelveRowWithLabel(), table.getLabel(datos[datos.length - 1]));
                 table.addRow(row);
             }
         } catch (FileNotFoundException e) {

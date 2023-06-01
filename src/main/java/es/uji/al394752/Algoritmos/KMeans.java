@@ -24,20 +24,62 @@ public class KMeans implements Algorithm<Table,  Integer,List<Double>> , Distanc
         this.numClusters = numClusters;
         this.numIterations = numIterations;
         this.seed = seed;
+        this.distance = new EuclideanDistance();
     }
     List<Row> centros = new ArrayList<>();
+    private void crearCentros(Table table){
+        Random random = new Random(seed);
+        for (int i = 0; i < numClusters; i++){
+            Row row =table.getRowAt(Math.abs(random.nextInt()% table.getSize()));
+            centros.add(row);
+        }
+    }
+    private void darCentros(Table datos, int numeroParametros ){
+        Map<Row, Integer> listaClusters = new HashMap<>();
+        for (int iteraciones = 0; iteraciones < numIterations; iteraciones++) {
+            //Miramos a que centro pertenece cada row
+            for (int i = 0; i < datos.getSize(); i++) {
+                Row rowAComparar = datos.getRowAt(i);
+                listaClusters.put(rowAComparar, estimate(rowAComparar.getData()));
+            }
+            //Recaulculamos los centros donde k es el grupo
+            for (int k = 0; k < centros.size(); k++){
+                List<Double> punto = new ArrayList<>();
+                for (int j = 0; j < numeroParametros; j++){
+                    double suma = 0;
+                    int cantidad = 0;
+                    //Buscamos todas las rows de dicho centro y calculamos la suma
+                    for (Row row : listaClusters.keySet()) {
+                        if (listaClusters.get(row) == k) {
+                            suma += row.getData().get(j);
+                            cantidad ++;
+                        }
+                    }
+                    if (cantidad == 0){
+                        punto.add(centros.get(k).getData().get(j));
+                    } else{
+                        punto.add(suma/cantidad);
+                    }
+
+                }
+                Row row = new Row(punto);
+                centros.set(k, row);
+            }
+        }
+    }
     public void train(Table datos){
         Random random = new Random(seed);
         int numeroParametros = datos.getSizeHeaders();
-        //Creamos los centros aleatorios
-        for (int i = 0; i < numClusters; i++){
-            List<Double> punto = new ArrayList<>();
-            for (int j = 0; j < numeroParametros; j++){
-                punto.add(random.nextDouble());
-            }
-            Row row = new Row(punto);
-            centros.add(row);
-        }
+//        //Creamos los centros aleatorios
+//        for (int i = 0; i < numClusters; i++){
+//            List<Double> punto = new ArrayList<>();
+//            for (int j = 0; j < numeroParametros; j++){
+//                punto.add(random.nextDouble());
+//            }
+//            Row row = new Row(punto);
+//            centros.add(row);
+//        }
+        crearCentros(datos);
         //Lista que almacena las rows con su numero de centro correspondiente
         Map<Row, Integer> listaClusters = new HashMap<>();
         for (int iteraciones = 0; iteraciones < numIterations; iteraciones++) {
@@ -92,7 +134,6 @@ public class KMeans implements Algorithm<Table,  Integer,List<Double>> , Distanc
 
     public Integer estimate(List<Double> data){
         Integer tipo = null;
-        Row dato = new Row(data);
         Double distanciaMin = distance.calculateDistance(data, centros.get(0).getData());
         for (int i = 1; i < centros.size();i++){
             Double distancia;

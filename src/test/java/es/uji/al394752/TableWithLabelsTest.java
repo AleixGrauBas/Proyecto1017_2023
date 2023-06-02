@@ -1,6 +1,9 @@
 package es.uji.al394752;
 
-import es.uji.al394752.Lectura.CSV;
+import es.uji.al394752.clases.Row;
+import es.uji.al394752.clases.RowWithLabel;
+import es.uji.al394752.clases.TableWithLabels;
+import es.uji.al394752.lectura.CSV;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -8,9 +11,9 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TableWithLabelsTest {
-    CSV csv = new CSV();
-    String separator = System.getProperty( "file.separator" );
-    TableWithLabels tabla = csv.readTableWithLabels( "src" + separator + "iris.csv");
+    private CSV csv = new CSV();
+    private String separator = System.getProperty( "file.separator" );
+    private TableWithLabels tabla = csv.readTableWithLabels( "src" + separator + "iris.csv");
     @Test
     void getRowAt() {
         List<Double> esperado = new LinkedList<>();
@@ -33,6 +36,6 @@ class TableWithLabelsTest {
         int index = tabla.getLabel("Iris-Setosa");
         RowWithLabel esperada = new RowWithLabel(newRow, index);
         tabla.addRow(esperada);
-        assertEquals(esperada.getData(),tabla.getRowAt(tabla.rows.size()-1).getData());
+        assertEquals(esperada.getData(),tabla.getRowAt(tabla.getRowsSize()-1).getData());
     }
 }

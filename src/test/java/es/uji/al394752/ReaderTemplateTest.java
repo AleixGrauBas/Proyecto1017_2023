@@ -1,8 +1,11 @@
 package es.uji.al394752;
 
-import es.uji.al394752.Lectura.CSVLabeledFileReader;
-import es.uji.al394752.Lectura.CSVUnlabeledFileReader;
-import es.uji.al394752.Lectura.ReaderTemplate;
+import es.uji.al394752.clases.Row;
+import es.uji.al394752.clases.RowWithLabel;
+import es.uji.al394752.clases.Table;
+import es.uji.al394752.lectura.CSVLabeledFileReader;
+import es.uji.al394752.lectura.CSVUnlabeledFileReader;
+import es.uji.al394752.lectura.ReaderTemplate;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -81,7 +84,7 @@ class ReaderTemplateTest {
         System.out.println(index);
         RowWithLabel esperada = new RowWithLabel(newRow, index);
         tabla.addRow(esperada);
-        assertEquals(esperada.getData(),tabla.getRowAt(tabla.rows.size()-1).getData());
+        assertEquals(esperada.getData(),tabla.getRowAt(tabla.getRowsSize() -1).getData());
         index = tabla.getLabel("Iris-versicolor");
         System.out.println(index);
         index = tabla.getLabel("Iris-virginica");

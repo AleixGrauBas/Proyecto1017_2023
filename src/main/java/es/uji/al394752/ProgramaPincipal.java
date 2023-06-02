@@ -1,4 +1,7 @@
 package es.uji.al394752;
+import es.uji.al394752.controlador.ImplementacionControlador;
+import es.uji.al394752.modelo.ImplementacionModelo;
+import es.uji.al394752.vista.ImplementacionVista;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

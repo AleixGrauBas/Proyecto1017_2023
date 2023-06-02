@@ -1,7 +1,9 @@
 package es.uji.al394752;
 
-import es.uji.al394752.Algoritmos.KMeans;
-import es.uji.al394752.Distancias.EuclideanDistance;
+import es.uji.al394752.algoritmos.KMeans;
+import es.uji.al394752.clases.Row;
+import es.uji.al394752.clases.Table;
+import es.uji.al394752.distancias.EuclideanDistance;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,8 +13,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class KMeansTest {
-    KMeans kmeans = new KMeans(3,10,100, new EuclideanDistance());
-    Table datos = new Table();
+    private KMeans kmeans = new KMeans(3,10,100, new EuclideanDistance());
+    private Table datos = new Table();
     @BeforeEach
     void start(){
         List<String> headers = new ArrayList<>();
@@ -38,6 +40,7 @@ class KMeansTest {
     }
     @Test
     void estimate() {
+
         kmeans.train(datos);
         List<Double> row2 = new ArrayList<>();
         row2.add(4.7);row2.add(3.2);row2.add(1.3);row2.add(0.2);

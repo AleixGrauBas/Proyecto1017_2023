@@ -1,6 +1,9 @@
 package es.uji.al394752;
 
-import es.uji.al394752.Lectura.CSV;
+import es.uji.al394752.clases.Row;
+import es.uji.al394752.clases.Table;
+import es.uji.al394752.clases.TableWithLabels;
+import es.uji.al394752.lectura.CSV;
 
 import java.util.ArrayList;
 import java.util.List;

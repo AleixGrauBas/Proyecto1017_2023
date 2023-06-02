@@ -4,6 +4,7 @@ import es.uji.al394752.algoritmos.KMeans;
 import es.uji.al394752.clases.Row;
 import es.uji.al394752.clases.Table;
 import es.uji.al394752.distancias.EuclideanDistance;
+import es.uji.al394752.distancias.ManhattanDistance;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -40,7 +41,6 @@ class KMeansTest {
     }
     @Test
     void estimate() {
-
         kmeans.train(datos);
         List<Double> row2 = new ArrayList<>();
         row2.add(4.7);row2.add(3.2);row2.add(1.3);row2.add(0.2);
@@ -49,6 +49,19 @@ class KMeansTest {
         List<Double> row1 = new ArrayList<>();
         row1.add(4.6);row1.add(3.4);row1.add(1.4);row1.add(0.3);
         Integer resultado = kmeans.estimate(row1);
+
+        assertEquals(esperado, resultado);
+
+        kmeans = new KMeans(3,10,100, new ManhattanDistance());
+        kmeans.train(datos);
+
+        row2 = new ArrayList<>();
+        row2.add(4.7);row2.add(3.2);row2.add(1.3);row2.add(0.2);
+        esperado = kmeans.estimate(row2);
+
+        row1 = new ArrayList<>();
+        row1.add(4.6);row1.add(3.4);row1.add(1.4);row1.add(0.3);
+        resultado = kmeans.estimate(row1);
 
         assertEquals(esperado, resultado);
     }

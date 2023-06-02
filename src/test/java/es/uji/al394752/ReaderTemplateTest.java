@@ -81,13 +81,9 @@ class ReaderTemplateTest {
         List<Double> newRow = new ArrayList<>();
         newRow.add(5.2);newRow.add(1.2);newRow.add(5.3);newRow.add(7.2);
         int index = tabla.getLabel("Iris-Setosa");
-        System.out.println(index);
         RowWithLabel esperada = new RowWithLabel(newRow, index);
         tabla.addRow(esperada);
         assertEquals(esperada.getData(),tabla.getRowAt(tabla.getRowsSize() -1).getData());
-        index = tabla.getLabel("Iris-versicolor");
-        System.out.println(index);
-        index = tabla.getLabel("Iris-virginica");
-        System.out.println(index);
+
     }
 }

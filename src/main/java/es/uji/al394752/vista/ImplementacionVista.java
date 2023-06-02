@@ -145,7 +145,7 @@ public class ImplementacionVista implements Vista {
     private void cambiarVentana() throws IOException {
         // Crear una nueva Stage y una nueva escena con los elementos de la segunda ventana
         Stage secundaryStage = new Stage();
-        secundaryStage.setTitle("Recommended Titles");
+        secundaryStage.setTitle("Recommended Titles for " + cancion);
         HBox root = new HBox();
         secundaryStage.setScene(new Scene(root, 250, 250));
         secundaryStage.show();

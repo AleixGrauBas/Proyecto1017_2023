@@ -6,7 +6,7 @@ import es.uji.al394752.clases.Table;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecSys {
+public class RecSys implements RecSysIn{
     private Algorithm algorithm;
     private List<Integer> listaEstimate = new ArrayList<>();
     Table testData;
@@ -38,10 +38,11 @@ public class RecSys {
 
     private List<String> selectItems(int indiceLikedItem, int labelLikedItem, int numRec){
         List<String> resultado = new ArrayList<>();
+        String liked = testItemNames.get(indiceLikedItem);
         for (int i = 0; i < numRec; i++){
             for (int j = 0; j < listaEstimate.size(); j++){
                 if (listaEstimate.get(j) != null) {
-                    if (listaEstimate.get(j) == labelLikedItem && j != indiceLikedItem) {
+                    if (listaEstimate.get(j) == labelLikedItem && j != indiceLikedItem && !liked.equals(testItemNames.get(j))) {
                         i++;
                         resultado.add(testItemNames.get(j));
                     }

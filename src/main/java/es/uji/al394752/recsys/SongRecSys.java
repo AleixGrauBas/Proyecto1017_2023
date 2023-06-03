@@ -16,7 +16,12 @@ import java.util.Map;
 
 class SongRecSys {
     private RecSys recsys;
+    private List<String> recommended_items;
+    public List<String> getRecommended_items(){return recommended_items;}
 
+    private String liked_name;
+
+    public String getLiked_name(){return  liked_name;}
     SongRecSys(String method) throws Exception {
         String sep = System.getProperty("file.separator");
         String ruta = "src" + sep + "data";
@@ -51,8 +56,8 @@ class SongRecSys {
         this.recsys.run(tables.get(method+"test"), names);
 
         // Given a liked item, ask for a number of recomendations
-        String liked_name = "Lootkemia";
-        List<String> recommended_items = this.recsys.recommend(liked_name,5);
+        liked_name = "Lootkemia";
+        recommended_items = this.recsys.recommend(liked_name,5);
 
         // Display the recommendation text (to be replaced with graphical display with JavaFX implementation)
         reportRecommendation(liked_name,recommended_items);

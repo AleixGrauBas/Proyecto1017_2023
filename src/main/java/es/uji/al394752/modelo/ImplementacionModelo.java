@@ -24,12 +24,28 @@ public class ImplementacionModelo implements Modelo{
     private RecSys recSys;
     private String recomendacion;
     private String distancia;
+    private List<String> names;
     //Devolvemos las recomendaciones
     public void setRecomendacion(String recomendacion) {
+        this.recSys = null;
         this.recomendacion = recomendacion;
+    }
+    public boolean getRecSys(){return this.recSys == null;}
+
+    @Override
+    public List<String> getNombres() {
+        String sep = System.getProperty("file.separator");
+        String ruta = "src" + sep + "data";
+        try {
+            names = readNames(ruta+sep+"songs_test_names.csv");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return names;
     }
 
     public void setDistancia(String distancia) {
+        recSys = null;
         this.distancia = distancia;
     }
     //actualiza la lista recomendacions cada vez que hay un cambio
@@ -43,7 +59,6 @@ public class ImplementacionModelo implements Modelo{
         CSV csv = new CSV();
         String sep = System.getProperty("file.separator");
         String ruta = "src" + sep + "data";
-        List<String> names = readNames(ruta+sep+"songs_test_names.csv");
 
         Distance distance;
         if (distancia.equals("Euclidean"))

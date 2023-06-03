@@ -36,6 +36,8 @@ public class ImplementacionControlador implements Controlador{
 
     @Override
     public void recomendarCanciones() throws IOException {
+        if (modelo.getRecSys() == true)
+            modelo.run();
         String cancion = vista.getCanciones();
         int numRecomendaciones = vista.getNumRecomendaciones();
         modelo.recomendarCanciones(cancion, numRecomendaciones);

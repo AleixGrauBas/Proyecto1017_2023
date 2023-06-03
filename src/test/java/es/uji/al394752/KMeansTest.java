@@ -35,11 +35,6 @@ class KMeansTest {
     }
 
     @Test
-    void train() {
-        kmeans.train(datos);
-        assertNotNull(kmeans);
-    }
-    @Test
     void estimate() {
         kmeans.train(datos);
         List<Double> row2 = new ArrayList<>();
